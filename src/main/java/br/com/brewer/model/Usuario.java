@@ -16,9 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.brewer.validation.AtributoConfirmacao;
 
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", 
+	message = "Confirmação da Senha não Confere")
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -29,10 +33,10 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
-	@NotNull(message = "Nome é obrigatório")
+	@NotEmpty(message = "Nome é obrigatório")
 	private String nome;
 
-	@NotNull(message = "E-mail é obrigatório")
+	@NotEmpty(message = "E-mail é obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
 
@@ -43,7 +47,7 @@ public class Usuario implements Serializable {
 
 	private Boolean ativo;
 
-	@NotNull(message = "Selecione pelo menos um grupo")
+	@NotEmpty(message = "Selecione pelo menos um grupo")
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "codigo_usuario")
 				, inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))	
